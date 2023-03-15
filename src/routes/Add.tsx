@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import './../App.css';
-import { Layout } from '../components/layout';
+import { Layout } from '../components/Layout';
 import axios from 'axios';
-import { load } from 'cheerio';
 
 const formClasses = 'bg-gray-800 text-white rounded-md p-2 w-full mb-4';
 
@@ -22,10 +21,10 @@ function Home() {
     async function getClients() {
       /**
        * Get clients from API
-       * IMPORTANT: This is a CORS proxy, so it's not safe to use in production,
+       * NOTE: This is a CORS proxy, so it's not safe to use in production,
        * read more here https://allorigins.win/.
        */
-      await axios.get('https://api.allorigins.win/raw?url=https://pastebin.com/raw/zSFTiVWr', { timeout: 2000 })
+      await axios.get('https://api.allorigins.win/raw?url=https://pastebin.com/raw/zSFTiVWr', { timeout: 5000 })
         .then((response) => {
           console.log(response.data);
           setClients(response.data);

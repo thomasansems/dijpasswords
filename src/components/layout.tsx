@@ -14,7 +14,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => (
                     <h1 className="font-bold text-3xl">DIJ Passwords</h1>
                 </Link>
                 <Link to="/add">
-                    <Plus className=" cursor-pointer"></Plus>
+                    <Plus className="cursor-pointer"></Plus>
                 </Link>
             </header>
             <main className="flex-1 mt-4 px-3">
