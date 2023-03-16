@@ -1,37 +1,40 @@
-import React from 'react';
-import logo from './../logo.svg';
 import './../App.css';
 import { Layout } from '../components/Layout';
 import Card from '../components/Card';
+import localforage from 'localforage';
+import { useEffect, useState } from 'react';
+import { ItemProps } from './../types';
 
-function Home() {
+export default function Home() {
 
-  const items = [{
-    title: 'John Doe',
-    password: '123456',
-    color: '#494522',
-    client: 'Dij'
-  },
-  {
-    title: 'John Doe',
-    password: '123456',
-    color: '#494522',
-    client: 'Dij'
-  }]
+  const [items, setItems] = useState<ItemProps[]>([]);
+
+  useEffect(() => {
+    const getItems = async () => {
+
+      localforage.getItem<ItemProps[]>('dij-passwords')
+        .then((value) => {
+          setItems(value || [])
+        }).catch((err) => {
+          console.error(err);
+        });
+    };
+
+    getItems();
+
+  }, []);
 
   return (
     <Layout>
-      {items.map((item, index) => (
+      {items.length > 1 && items.map((item, index) => (
         <div key={index}>
           <Card
             title={item.title}
             password={item.password}
-            color={item.color}
-            client={item.client} />
+            client={item.client}
+            color={item.color} />
         </div>
       ))}
     </Layout>
   );
 }
-
-export default Home;
