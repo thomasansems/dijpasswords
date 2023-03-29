@@ -11,7 +11,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => (
         <div className="flex flex-col">
             <header className="flex-none flex justify-between items-center text-white p-4 border-gray-800 border-b-2">
                 <Link to="/">
-                    <h1 className="font-bold text-3xl">DIJ Passwords</h1>
+                    <h1 className="font-bold text-3xl">My Passwords</h1>
                 </Link>
                 <Link to="/add">
                     <Plus className="cursor-pointer"></Plus>

@@ -1,6 +1,10 @@
-import React from 'react';
-import { render, fireEvent, screen, waitFor } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
 import Add from './routes/Add';
+
+/**
+ * Basic test to check if the form is rendered
+ * NOTE: This is not a complete test, it's just a starting point
+ */
 
 describe('Add', () => {
   it('should add a new password item when form is submitted', async () => {
