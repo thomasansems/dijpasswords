@@ -1,7 +1,8 @@
-import { ItemProps } from './../types';
+import { CardProps } from './../types';
 import { useState } from 'react';
+import { Trash } from './icons';
 
-export const Card: React.FC<ItemProps> = ({ title, password, color, client }) => {
+export const Card: React.FC<CardProps> = ({ title, password, color, client, onDelete }) => {
 
     const [isHovered, setIsHovered] = useState(false);
 
@@ -14,6 +15,9 @@ export const Card: React.FC<ItemProps> = ({ title, password, color, client }) =>
             <h3 className="text-lg font-bold">{title}</h3>
             <div className="text-sm" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
                 <span>{isHovered ? password : '*'.repeat(password.length)}</span>
+            </div>
+            <div>
+                <Trash onClick={() => onDelete()} />
             </div>
         </div >
     )

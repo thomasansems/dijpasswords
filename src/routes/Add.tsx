@@ -2,22 +2,29 @@ import { useEffect, useState } from 'react';
 import './../App.css';
 import { Layout } from '../components/Layout';
 import axios from 'axios';
-import localforage from 'localforage';
 import { ItemProps, Client } from './../types';
 import { useNavigate } from 'react-router-dom';
+import { createItem } from './../utils/handlers';
 
 const formClasses = 'bg-gray-800 text-white rounded-md p-2 w-full mb-4';
 
+const emptyItem: ItemProps = {
+  title: '',
+  password: '',
+  client: '',
+  color: '',
+  id: ''
+};
+
 function Add() {
 
-  const [formData, setFormData] = useState({ title: '', password: '', client: '', color: '' });
+  const [formData, setFormData] = useState<ItemProps>(emptyItem);
   const [clients, setClients] = useState<Client[]>([]);
   const [error, setError] = useState<any>(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-
     async function getClients() {
       /**
        * Get clients from API
@@ -40,31 +47,27 @@ function Add() {
 
   }, []);
 
+  /**
+   * Handle form submit
+   */
   const handleSubmit = async (event: { preventDefault: () => void; }) => {
-    event.preventDefault();
+    event.preventDefault()
 
-    // Get the current list of items from local storage
-    let data: ItemProps[] | null = await localforage.getItem('dij-passwords');
-
-    if (data) {
-      data.unshift(formData);
-    } else {
-      data = [formData];
-    }
-
-    // Store the updated list in local storage
-    localforage.setItem('dij-passwords', data)
-      .then(() => {
-        // Reset the form data and navigate to the home page
-        setFormData({ title: '', password: '', client: '', color: '' })
-        navigate('/')
-      }).catch((err) => {
-        console.error(err);
-      });
+    // Store the updated list 
+    createItem(formData).then(() => {
+      // Reset the form data and navigate to the home page
+      setFormData(emptyItem)
+      navigate('/')
+    }).catch((err) => {
+      console.error(err);
+    });
   };
 
+  /**
+   * Update the form data state on any change
+   */
   const handleInputChange = (event: { target: { name: any; value: any; }; }) => {
-    const { name, value } = event.target;
+    const { name, value } = event.target
     // Get the color of the selected client
     const color = clients.find((client) => client.name === value)?.color
     // Update the form data state with the new value
